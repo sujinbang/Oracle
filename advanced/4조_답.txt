@@ -1,0 +1,33 @@
+1. 
+SELECT DISTINCT(mem_name), mem_regno1 || '-' || SUBSTR(mem_regno2,1,1) || '******'as resident_num,
+       mem_job, mem_like 
+  FROM (SELECT lprod_nm, MAX(prod_sale) as max
+         FROM lprod, prod
+         WHERE lprod_gu = prod_lgu
+         GROUP BY lprod_nm) i,
+        lprod, prod, cart, member
+ WHERE lprod_gu = prod_lgu
+   AND prod_id = cart_prod
+   AND cart_member = mem_id
+ ORDER BY resident_num asc ;
+ 
+ 2. 
+ select distinct mem_name,buyer_name,buyer_add1,LPAD(buyer_add2,6,'0'),mem_like,
+        mem_add2
+from member,buyer,cart,prod
+where mem_id=cart_member
+  and mem_like ='독서'
+  and mem_add2 like '%아파트%'
+  and cart_prod=prod_id
+  and prod_buyer=buyer_id
+  and buyer_add1 like '%빌딩'
+  and substr(LPAD(buyer_add2,6,'0'),1,2)>=05
+  and substr(LPAD(buyer_add2,6,'0'),1,2)<20;
+ 
+ 
+ 3. 
+ select concat(substr(replace(substr(buyer_mail, instr(buyer_mail, '@')),'@',''), 1, instr(replace(substr(buyer_mail, instr(buyer_mail, '@')),'@',''),'.')-1),
+concat('@',replace(substr(buyer_mail, instr(buyer_mail, '@')),'@',''))
+)
+
+from buyer;
