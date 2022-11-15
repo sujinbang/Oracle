@@ -1,0 +1,4 @@
+1.  cmd(관리자)창 켜서 sqlplus "/as sysdba"
+2. create user 계정이름 identified by 비밀번호;
+2. grant connect, resource, dba to 계정이름;
+4. sql developer 켜서 새접속 로그인
